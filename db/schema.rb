@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_071220) do
+ActiveRecord::Schema.define(version: 2019_04_11_081739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2019_04_11_071220) do
     t.index ["user_id"], name: "index_repeating_rides_on_user_id"
   end
 
+  create_table "rides", force: :cascade do |t|
+    t.integer "day"
+    t.string "time"
+    t.string "location"
+    t.bigint "repeating_ride_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["repeating_ride_id"], name: "index_rides_on_repeating_ride_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", null: false
@@ -34,4 +44,5 @@ ActiveRecord::Schema.define(version: 2019_04_11_071220) do
   end
 
   add_foreign_key "repeating_rides", "users"
+  add_foreign_key "rides", "repeating_rides"
 end
