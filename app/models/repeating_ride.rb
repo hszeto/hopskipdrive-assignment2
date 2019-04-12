@@ -14,16 +14,13 @@ class RepeatingRide < ApplicationRecord
   ###################################################################
 
   def generate_rides
-    ap __method__
     (1..self.frequency).each do |freq|
       self.days.each do |day_of_the_weak|
         week_number = Time.now.strftime("%U").to_i + freq
+        year = self.created_at.year
 
-        date = Date.commercial(
-          self.created_at.year,
-          week_number,
-          day_of_the_weak
-        ).to_s
+        date = Date.commercial(year, week_number, day_of_the_weak)
+                   .to_s
 
         next if Time.parse(date) < Time.now.to_date
 
