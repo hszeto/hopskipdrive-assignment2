@@ -33,8 +33,12 @@ class RepeatingRide < ApplicationRecord
     end
   end
 
-  def update_rides
-    ap __method__
+  def update_rides(data)
+    self.rides.update(data)
+  end
+
+  def delete_all_rides
+    self.rides.destroy_all
   end
 
   # def serialize_response
