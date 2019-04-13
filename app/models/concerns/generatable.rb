@@ -5,11 +5,11 @@ module Generatable
     after_create :generate_rides
   end
 
-  ###################################################################
-  # Frequency: Number of recurring week. 1 to 4 weeks.
-  # Day of the week: [0,1,2,3,4,5,6]. 0 is Sunday. 6 is Saturday.
-  # Week number: Week number of the year.The week starts with Sunday.
-  ###################################################################
+  ##################################################################
+  # frequency: Number of recurring week. 1 to 4 weeks.
+  # day_of_the_weak: [0,1,2,3,4,5,6]. 0 is Sunday. 6 is Saturday.
+  # week_number: Week number of the year. The week starts on Sunday.
+  ##################################################################
 
   def generate_rides
     (1..self.frequency).each do |freq|

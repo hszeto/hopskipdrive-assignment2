@@ -1,7 +1,7 @@
 RSpec.describe 'RepeatingRides API', type: :request do
   let(:user) { create :user}
 
-  describe 'POST /api/repeating-rides' do
+  describe '/api/repeating-rides' do
     let(:valid_params) {{
       days: [2, 4],
       frequency: 3,
