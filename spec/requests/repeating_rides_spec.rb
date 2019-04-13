@@ -58,9 +58,37 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)['error'])
-          .to eq 'Validation failed: User must exist'
+          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
         expect(response.headers['Warning'])
-          .to eq 'Validation failed: User must exist'
+          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
+      end
+
+      it 'weekly frequency > 4 returns 422' do
+        post(
+          '/api/repeating-rides',
+          params: valid_params.merge(frequency: 5).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['error'])
+          .to eq 'Cannot repeat for more than a month'
+        expect(response.headers['Warning'])
+          .to eq 'Cannot repeat for more than a month'
+      end
+
+      it 'days is not within [0,1,2,3,4,5,6] returns 422' do
+        post(
+          '/api/repeating-rides',
+          params: valid_params.merge(days: [2,4,7]).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['error'])
+          .to eq 'Invalid day. Use 0 for Sunday, 6 for Saturday.'
+        expect(response.headers['Warning'])
+          .to eq 'Invalid day. Use 0 for Sunday, 6 for Saturday.'
       end
     end
   end

@@ -3,6 +3,10 @@ RSpec.describe RepeatingRide, type: :model do
   let!(:routine){ create :repeating_ride }
 
   it { should belong_to(:user) }
+  it { should validate_presence_of(:frequency) }
+  it { should validate_presence_of(:days) }
+  it { should validate_presence_of(:time) }
+  it { should validate_presence_of(:location) }
 
   it 'create a routine' do
     expect(RepeatingRide.count).to eq 1

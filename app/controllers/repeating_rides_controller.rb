@@ -1,5 +1,6 @@
 class RepeatingRidesController < ApplicationController
   before_action :set_repeating_ride, only: [:update, :destroy]
+  before_action :validate_params
 
   def create
     RepeatingRide.create!(repeating_rides_params)
@@ -29,6 +30,19 @@ class RepeatingRidesController < ApplicationController
       :user_id,
       days:[]
     )
+  end
+
+  def validate_params
+    # Recurrance cannot be over 4 weeks
+    if repeating_rides_params['frequency'] &&
+       (repeating_rides_params['frequency'] < 0 || repeating_rides_params['frequency'] > 4)
+      raise ErrorHandler::UnprocessableEntity, "Cannot repeat for more than a month"
+    end
+    # Days must be within 0 to 6. 0 for Sunday, 6 for Saturday.
+    if repeating_rides_params['days'] &&
+        (repeating_rides_params['days'] - (0..6).to_a).any?
+      raise ErrorHandler::UnprocessableEntity, "Invalid day. Use 0 for Sunday, 6 for Saturday."
+    end
   end
 
   def set_repeating_ride

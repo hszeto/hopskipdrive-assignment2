@@ -54,9 +54,9 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)['error'])
-          .to eq 'Validation failed: User must exist'
+          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
         expect(response.headers['Warning'])
-          .to eq 'Validation failed: User must exist'
+          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
       end
     end
   end
