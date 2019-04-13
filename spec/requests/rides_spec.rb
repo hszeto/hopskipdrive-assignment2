@@ -11,8 +11,8 @@ RSpec.describe 'RepeatingRides API', type: :request do
     }}
 
     let(:valid_update_params) {{
-      time: '12:34 PM',
-      location: 'ABC St. Los Angeles, CA 90038',
+      time: '11:22 AM',
+      location: 'DEF Rd. Los Angeles, CA 90038',
     }}
 
     context 'When request is valid' do
@@ -25,13 +25,9 @@ RSpec.describe 'RepeatingRides API', type: :request do
         )
       end
 
-      it 'create returns 200' do
-        expect(response.status).to eq(201)
-      end
-
-      it 'update returns 200' do
+      it 'update a ride returns 200' do
         put(
-          "/api/repeating-rides/#{RepeatingRide.last.id}",
+          "/api/rides/#{RepeatingRide.last.rides.last.id}",
           params: valid_update_params.to_json,
           headers: { 'Content-Type' => 'application/json' }
         )
@@ -39,9 +35,9 @@ RSpec.describe 'RepeatingRides API', type: :request do
         expect(response.status).to eq(200)
       end
 
-      it 'delete returns 200' do
+      it 'delete a ride returns 200' do
         delete(
-          "/api/repeating-rides/#{RepeatingRide.last.id}",
+          "/api/rides/#{RepeatingRide.last.rides.last.id}",
           headers: { 'Content-Type' => 'application/json' }
         )
 
