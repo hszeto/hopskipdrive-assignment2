@@ -55,7 +55,7 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
       it 'update a ride returns 200' do
         put(
-          "/api/repeating-rides/#{RepeatingRide.last.id}/rides/#{RepeatingRide.last.rides.last.id}",
+          "/api/rides/#{RepeatingRide.last.rides.last.id}",
           params: valid_ride_update_params.to_json,
           headers: { 'Content-Type' => 'application/json' }
         )
@@ -65,7 +65,7 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
       it 'delete a ride returns 200' do
         delete(
-          "/api/repeating-rides/#{RepeatingRide.last.id}/rides/#{RepeatingRide.last.rides.last.id}",
+          "/api/rides/#{RepeatingRide.last.rides.last.id}",
           headers: { 'Content-Type' => 'application/json' }
         )
 

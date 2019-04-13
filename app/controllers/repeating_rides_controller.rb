@@ -1,6 +1,5 @@
 class RepeatingRidesController < ApplicationController
   before_action :set_repeating_ride, only: [:update, :destroy]
-  before_action :set_specific_ride, only: [:edit_ride, :destroy_ride]
 
   def create
     RepeatingRide.create!(repeating_rides_params)
@@ -20,18 +19,6 @@ class RepeatingRidesController < ApplicationController
     render json:{}, status: 200
   end
 
-  def edit_ride
-    @specific_ride.update_ride(repeating_rides_params)
-
-    render json:{}, status: 200
-  end
-
-  def destroy_ride
-    @specific_ride.delete_ride
-
-    render json:{}, status: 200
-  end
-
   private
 
   def repeating_rides_params
@@ -46,9 +33,5 @@ class RepeatingRidesController < ApplicationController
 
   def set_repeating_ride
     @repeating_ride = RepeatingRide.find(params['repeating_ride_id'])
-  end
-
-  def set_specific_ride
-    @specific_ride = set_repeating_ride.rides.find(params['ride_id'])
   end
 end

@@ -14,7 +14,7 @@ RSpec.describe RepeatingRide, type: :model do
   describe 'CRUD rides from repeating_ride' do
     it 'create 3 rides per week for 3 weeks (frequency == 3)' do
       # ap Ride.last.repeating_ride.user
-      expect(Ride.count).to be >= 7
+      expect(Ride.count).to be >= 6
     end
 
     it 'update all rides' do
@@ -43,7 +43,7 @@ RSpec.describe RepeatingRide, type: :model do
 
       original_rides[2].destroy
 
-      # RepeatingRide.last.rides is 1 less
+      # The last repeating_ride has 1 less ride
       expect(original_rides.size - RepeatingRide.last.rides.size).to eq 1
     end
   end
