@@ -25,18 +25,35 @@ RSpec.describe 'RepeatingRides API', type: :request do
         )
       end
 
-      it 'create returns 200' do
-        expect(response.status).to eq(201)
+      it 'get returns 200' do
+        get("/api/repeating-rides/#{RepeatingRide.last.id}")
+        parsed_body = JSON.parse(response.body)
+
+        expect(response.status).to eq(200)
+        expect(parsed_body['user']['email']).to eq user.email
+        expect(parsed_body['rides'].size).to eq Ride.all.size
       end
 
-      it 'update returns 200' do
+      it 'create returns 201' do
+        expect(response.status).to eq(201)
+        parsed_body = JSON.parse(response.body)
+
+        expect(parsed_body['user']['email']).to eq user.email
+        expect(parsed_body['rides'].size).to eq Ride.all.size
+      end
+
+      it 'update repeating_ride and related rides returns 200' do
         put(
           "/api/repeating-rides/#{RepeatingRide.last.id}",
           params: valid_update_params.to_json,
           headers: { 'Content-Type' => 'application/json' }
         )
 
+        parsed_body = JSON.parse(response.body)
+
         expect(response.status).to eq(200)
+        expect(parsed_body['location']).to eq 'ABC St. Los Angeles, CA 90038'
+        expect(parsed_body['rides'].last['location']).to eq 'ABC St. Los Angeles, CA 90038'
       end
 
       it 'delete returns 200' do
@@ -50,6 +67,15 @@ RSpec.describe 'RepeatingRides API', type: :request do
     end
 
     context 'When request is invalid' do
+      before do
+        # create repeating ride
+        post( 
+          '/api/repeating-rides',
+          params: valid_params.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+      end
+
       it 'missing params returns 422' do
         post( 
           '/api/repeating-rides',
@@ -58,9 +84,36 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)['error'])
-          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
+          .to eq "param is missing or the value is empty: repeating_ride"
         expect(response.headers['Warning'])
-          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
+          .to eq "param is missing or the value is empty: repeating_ride"
+      end
+
+      it 'missing params returns 422' do
+        put( 
+          '/api/repeating-rides/999',
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['error'])
+          .to eq "Couldn't find RepeatingRide with 'id'=999"
+        expect(response.headers['Warning'])
+          .to eq "Couldn't find RepeatingRide with 'id'=999"
+      end
+
+      it 'missing params returns 422' do
+        put( 
+          "/api/repeating-rides/#{RepeatingRide.last.id}",
+          params: valid_update_params.merge(frequency: 2).to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['error'])
+          .to eq "unknown attribute 'frequency' for Ride."
+        expect(response.headers['Warning'])
+          .to eq "unknown attribute 'frequency' for Ride."
       end
 
       it 'weekly frequency > 4 returns 422' do

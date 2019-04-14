@@ -17,7 +17,6 @@ RSpec.describe RepeatingRide, type: :model do
 
   describe 'CRUD rides from repeating_ride' do
     it 'create 3 rides per week for 3 weeks (frequency == 3)' do
-      # ap Ride.last.repeating_ride.user
       expect(Ride.count).to be >= 6
     end
 

@@ -1,35 +1,40 @@
 class RepeatingRidesController < ApplicationController
-  before_action :set_repeating_ride, only: [:update, :destroy]
-  before_action :validate_params
+  before_action :set_repeating_ride, only: [:show, :update, :destroy]
+  before_action :validate_params, except: [:show, :destroy]
+
+  def show
+    json_repeating_ride_response 
+  end
 
   def create
-    RepeatingRide.create!(repeating_rides_params)
-  
-    render json:{}, status: 201
+    @repeating_ride = RepeatingRide.create!(repeating_rides_params)
+
+    json_repeating_ride_response(201)
   end
 
   def update
     @repeating_ride.update_rides(repeating_rides_params)
 
-    render json:{}, status: 200
+    json_repeating_ride_response
   end
 
   def destroy
-    @repeating_ride.delete_all_rides
+    @repeating_ride.destroy
 
-    render json:{}, status: 200
+    json_response({})
   end
 
   private
 
   def repeating_rides_params
-    params.permit(
-      :frequency,
-      :location,
-      :time,
-      :user_id,
-      days:[]
-    )
+    params.require(:repeating_ride)
+          .permit(
+            :frequency,
+            :location,
+            :time,
+            :user_id,
+            days:[]
+          )
   end
 
   def validate_params

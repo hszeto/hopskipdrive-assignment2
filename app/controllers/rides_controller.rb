@@ -18,7 +18,8 @@ class RidesController < ApplicationController
   def rides_params
     params.permit(
       :location,
-      :time
+      :time,
+      :date
     )
   end
 

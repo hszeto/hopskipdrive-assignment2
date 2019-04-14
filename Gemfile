@@ -10,6 +10,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'awesome_print', '~> 1.8'
 gem 'rack-cors', require: 'rack/cors'
+gem 'active_model_serializers'
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'

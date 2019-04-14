@@ -12,6 +12,7 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
     let(:valid_update_params) {{
       time: '11:22 AM',
+      date: '2019-07-04',
       location: 'DEF Rd. Los Angeles, CA 90038',
     }}
 
@@ -54,9 +55,23 @@ RSpec.describe 'RepeatingRides API', type: :request do
 
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)['error'])
-          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
+          .to eq "param is missing or the value is empty: repeating_ride"
         expect(response.headers['Warning'])
-          .to eq "Validation failed: User must exist, Frequency can't be blank, Days can't be blank, Time can't be blank, Location can't be blank"
+          .to eq "param is missing or the value is empty: repeating_ride"
+      end
+
+      it 'id not found returns 422' do
+        put( 
+          '/api/repeating-rides/999',
+          params: valid_update_params.to_json,
+          headers: { 'Content-Type' => 'application/json' }
+        )
+
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['error'])
+          .to eq "Couldn't find RepeatingRide with 'id'=999"
+        expect(response.headers['Warning'])
+          .to eq "Couldn't find RepeatingRide with 'id'=999"
       end
     end
   end
