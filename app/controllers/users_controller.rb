@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   def index
     json_response(User.all, 200)
   end
+
   def create
     u = User.create!(users_params)
 

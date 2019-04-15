@@ -46,6 +46,29 @@ curl -X POST \
 ```
 ---
 ### API Request / Response:
+|Request|Create an user|
+|-|-|
+|Resourse|POST  https://hopskipdrive-assignment2.herokuapp.com/api/users||
+|Headers|Content-Type: application/json|
+|Body|{"name":"Testy", "email":"testy@example.com"}|
+
+|Response| | |
+|-|-|-|
+|Status|Body|Explanation|
+|201|{"id": 2,"name": "Testy", "email": "testy@example.com", "created_at": "2019-04-15T07:21:34.604Z", "updated_at": "2019-04-15T07:21:34.604Z"}|Created
+|422|{"error": message}|See response body or Warning Headers for details|
+---
+|Request|Show all users|
+|-|-|
+|Resourse|GET  https://hopskipdrive-assignment2.herokuapp.com/api/users||
+|Headers|Content-Type: application/json|
+
+|Response| | |
+|-|-|-|
+|Status|Body|Explanation|
+|200|[{"id": 2,"name": "Testy", "email": "testy@example.com", "created_at": "2019-04-15T07:21:34.604Z", "updated_at": "2019-04-15T07:21:34.604Z"}, {}... ]|OK
+|422|{"error": message}|See response body or Warning Headers for details|
+---
 |Request|Create a Repeating Ride||
 |-|-|-|
 |Resourse|POST https://hopskipdrive-assignment2.herokuapp.com/api/repeating-rides|Creates a repeating ride and rides according to days (day of week) and recurring week (frequency).|
