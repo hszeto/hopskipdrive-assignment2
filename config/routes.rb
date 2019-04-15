@@ -7,5 +7,8 @@ Rails.application.routes.draw do
 
     put    '/rides/:ride_id', to: 'rides#update'
     delete '/rides/:ride_id', to: 'rides#destroy'
+
+    get  '/users', to: 'users#index'
+    post '/users', to: 'users#create'
   end
 end

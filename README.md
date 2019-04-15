@@ -71,7 +71,7 @@ curl -X POST \
 ---
 |Request|Update a Repeating Ride|Explanation|
 |-|-|-|
-|Resourse|PUT https://hopskipdrive-assignment2.herokuapp.com/api/repeating-rides/repeating_ride_id|repeating_ride_id is required|
+|Resourse|PUT https://hopskipdrive-assignment2.herokuapp.com/api/repeating-rides/:repeating_ride_id|repeating_ride_id is required|
 |Headers|Content-Type: application/json|
 |Body|{"location": "DEFG St. Los Angeles, CA 90014","time": "01:00 PM"}|Update the location and/or time of a repeating ride and all associated rides|
 
@@ -117,8 +117,8 @@ curl -X POST \
 
 ---
 ### Edge cases tests
-1) When create ride on the last week of the year. Will the api create rides extend to the next year?
-2) If user update a repeating ride with an old date in the past. How should the api handles that?
+* When create ride on the last week of the year. Will the api create rides extend to the next year?
+* If user update a repeating ride with an old date in the past. How should the api handles that?
 
 ---
 ### Performance challenge
