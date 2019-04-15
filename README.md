@@ -78,7 +78,7 @@ curl -X POST \
 |Response| | |
 |-|-|-|
 |Status|Body|Explanation|
-|201|{"frequency": 3, "location": "12 3rd St. Los Angeles, CA 90014", "time": "10:00 AM", "days": [2,4], "user": {"email": "ucla@hotmail.com"}, "rides": [{"time": "10:00 AM", "location": "12 3rd St. Los Angeles, CA 90014", "date": "2019-04-16"}, ...{}],|Created
+|201|{"id": 1,"frequency": 3, "location": "12 3rd St. Los Angeles, CA 90014", "time": "10:00 AM", "days": [2,4], "user": {"email": "ucla@hotmail.com"}, "rides": [{"time": "10:00 AM", "location": "12 3rd St. Los Angeles, CA 90014", "date": "2019-04-16"}, ...{}],|Created
 |422|{"error": message}|See response body or Warning Headers for details|
 ---
 |Request|Get a Repeating Ride|Explanation|

@@ -11,7 +11,7 @@ module ResponseHandler
 
   def selected_attributes_for_repeating_ride
     @repeating_ride.to_json(
-      only: [:frequency, :location, :time, :days],
+      only: [:id, :frequency, :location, :time, :days],
       include: [
         user: {
           only:[:email]
