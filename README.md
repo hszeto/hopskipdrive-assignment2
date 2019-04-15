@@ -148,3 +148,9 @@ curl -X POST \
 For this assignment, I am allowing repeating ride of 4 weeks only. Max number of rides to create is 4weeks x 7days = 28 days, which is 28 rides.
 
 The doc said repeating ride could continue for 1 year. That is 365 days, which is a max of 365 rides per repeating ride creation. Might consider using a gem called activerecord-import for bulk inserting data using ActiveRecord.
+---
+### What's next
+* Build an endpoint to return all repeating rides
+* Build an endpoint to return all repeating rides associated to an user
+* Build an endpoint to return all rides
+
